@@ -1,6 +1,11 @@
 # Rust
-**/target/
+**/target
 
 # Flutter
 **/.dart_tool
 **/build
+
+# Terraform
+**/.terraform
+**/*.tfstate*
+**/*.tfvars
