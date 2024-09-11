@@ -1,0 +1,6 @@
+services:
+  redis:
+    image: redis:7.4.0-alpine
+  mongo:
+    # I guess ubi meaning Universal Base Images of Red Hat.
+    image: mongodb/mongodb-community-server:7.0.5-ubi8

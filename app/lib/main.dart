@@ -15,11 +15,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'memkept',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      theme: MyTheme.light(),
+      darkTheme: MyTheme.dark(),
+      themeMode: ThemeMode.system,
       home: const MyHomePage(title: 'Bookmarks'),
     );
+  }
+}
+
+class MyTheme {
+  static ThemeData light() {
+    return ThemeData.from(colorScheme: const ColorScheme.light());
+  }
+
+  static ThemeData dark() {
+    return ThemeData.from(colorScheme: const ColorScheme.dark());
   }
 }
 
