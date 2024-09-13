@@ -1,16 +1,19 @@
 name: memkept
 description: "Memory keeping"
 # Do NOT publish.
-publish_to: 'none'
-# A number following + is optional.
+publish_to: "none"
+# Fix optional number on +1.
 version: 1.0.0+1
 
 environment:
   sdk: ^3.5.1
 
 dependencies:
+  bloc: ^8.1.4
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
+  protobuf: ^3.1.0
   web_socket_channel: ^3.0.1
 
 dev_dependencies:
