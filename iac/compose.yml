@@ -1,0 +1,16 @@
+services:
+  proxy:
+    image: kokimorino/mweb-proxy:latest
+    depends_on:
+      - api
+    ports:
+      - 80:8080
+  api:
+    image: kokimorino/mweb-api:latest
+    depends_on:
+      - db
+    expose:
+      - 8000
+  db:
+    # I guess ubi meaning Universal Base Images of Red Hat.
+    image: mongodb/mongodb-community-server:7.0.5-ubi8

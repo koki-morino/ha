@@ -3,7 +3,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
 
 main() async {
-  final url = Uri.parse('ws://localhost:8000');
+  final url = Uri.parse('ws://localhost/ws');
   final channel = WebSocketChannel.connect(url);
 
   channel.stream.listen((message) {

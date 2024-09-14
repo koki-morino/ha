@@ -14,11 +14,11 @@ provider "google" {
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
+  name = "mweb-network"
 }
 
 resource "google_compute_firewall" "rules" {
-  name    = "terraform-firewall-rule"
+  name    = "mweb-firewall-rule"
   network = google_compute_network.vpc_network.name
 
   allow {
@@ -30,13 +30,15 @@ resource "google_compute_firewall" "rules" {
   target_tags   = ["extern"]
 }
 
-resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
+resource "google_compute_instance" "vm_instance_1" {
+  name         = "mweb-instance-1"
   machine_type = "e2-medium"
+  zone         = "asia-northeast1-a"
 
   boot_disk {
     initialize_params {
       image = "projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20240830"
+      size  = 50
     }
   }
 
@@ -47,8 +49,33 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   metadata = {
-    user-data = file("./scripts/cloud-config.yaml")
+    user-data = file("./cloud-config.yaml")
   }
 
-  tags = ["extern"]
+  tags = google_compute_firewall.rules.target_tags
+}
+
+resource "google_compute_instance" "vm_instance_2" {
+  name         = "mweb-instance-2"
+  machine_type = "e2-medium"
+  zone         = "asia-northeast1-c"
+
+  boot_disk {
+    initialize_params {
+      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20240830"
+      size  = 50
+    }
+  }
+
+  network_interface {
+    network = google_compute_network.vpc_network.name
+    access_config {
+    }
+  }
+
+  metadata = {
+    user-data = file("./cloud-config.yaml")
+  }
+
+  tags = google_compute_firewall.rules.target_tags
 }
