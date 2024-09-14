@@ -1,8 +1,4 @@
 services:
-  proxy:
-    image: nginx:1.27.1-alpine
-  cache:
-    image: redis:7.4.0-alpine
   db:
     # I guess ubi meaning Universal Base Images of Red Hat.
     image: mongodb/mongodb-community-server:7.0.5-ubi8

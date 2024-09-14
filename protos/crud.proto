@@ -1,0 +1,14 @@
+syntax = "proto3";
+package todo;
+
+option go_package = "protos/";
+
+enum CRUD {
+    CREATE = 0;
+    // There is an assumption that READ sent by server is response
+    // to corresponding client READ request. Server never sends READ
+    // request to client which only has copy of data.
+    READ = 1;
+    UPDATE = 2;
+    DELETE = 3;
+}
