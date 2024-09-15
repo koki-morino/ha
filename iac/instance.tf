@@ -19,7 +19,7 @@ resource "google_compute_instance" "instance_1" {
   }
 
   metadata = {
-    user-data = file("./cloud-config.yaml")
+    user-data = file("./scripts/cloud-config.yaml")
   }
 
   tags = google_compute_firewall.rules.target_tags
@@ -46,7 +46,7 @@ resource "google_compute_instance" "instance_2" {
   }
 
   metadata = {
-    user-data = file("./cloud-config.yaml")
+    user-data = file("./scripts/cloud-config.yaml")
   }
 
   tags = google_compute_firewall.rules.target_tags
@@ -73,7 +73,7 @@ resource "google_compute_instance" "instance_witness" {
   }
 
   metadata = {
-    user-data = file("./cloud-config.yaml")
+    user-data = file("./scripts/cloud-config.yaml")
   }
 
   tags = google_compute_firewall.rules.target_tags

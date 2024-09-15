@@ -1,14 +1,14 @@
 #cloud-config
 
 groups:
-  - terraform
+  - koki
 
 users:
   - default
   - name: koki
     gecos: Koki Morino
     shell: /bin/bash
-    primary_group: terraform
+    primary_group: koki
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: users, admin
     lock_passwd: false

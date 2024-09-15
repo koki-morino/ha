@@ -14,7 +14,7 @@ ENV PATH="/app/flutter/bin:$PATH"
 
 # Build app.
 COPY . .
-# Ignore Git ownership problem as it prevents building.
+# Ignore Git ownership problem as it stops building process.
 RUN git config --global --add safe.directory /app/flutter
 RUN flutter pub get
 RUN flutter build web -o build

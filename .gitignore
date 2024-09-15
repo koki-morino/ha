@@ -1,9 +1,12 @@
 # Flutter
 **/build/
 **/.dart_tool/
-**/.flutter-plugins*
 
 # Terraform
 **/.terraform/
-**/*.tfstate*
+**/*.tfstate
+**/*.tfstate.backup
 **/*.tfvars
+
+# Packer
+**/*.pkrvars.hcl
