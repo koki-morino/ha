@@ -22,5 +22,3 @@ services:
     #   - type: bind
     #     source: ./data
     #     target: /data/db
-  cache:
-    image: redis:7.4.0-alpine

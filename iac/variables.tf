@@ -4,7 +4,7 @@ variable "prefix" {
 
 variable "domain" {}
 
-variable "project" {}
+variable "project_id" {}
 
 variable "region_1" {
   # Tokyo

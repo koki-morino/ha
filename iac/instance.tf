@@ -5,7 +5,7 @@ resource "google_compute_instance" "instance_1" {
 
   boot_disk {
     initialize_params {
-      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20240830"
+      image = "projects/${var.project_id}/global/images/mweb-server"
       type  = "pd-balanced"
       size  = 50
     }
@@ -14,15 +14,20 @@ resource "google_compute_instance" "instance_1" {
   network_interface {
     network    = google_compute_network.default.name
     subnetwork = google_compute_subnetwork.subnet_1.id
+    network_ip = "10.0.1.3"
     access_config {
     }
   }
 
   metadata = {
-    user-data = file("./scripts/cloud-config.yaml")
+    user-data = file("./scripts/cloud-config-server-1.yaml")
   }
 
-  tags = google_compute_firewall.rules.target_tags
+  tags = setunion(
+    google_compute_firewall.allow-internal.target_tags,
+    google_compute_firewall.allow-ssh.target_tags,
+    google_compute_firewall.allow-health-check.target_tags,
+  )
 }
 
 resource "google_compute_instance" "instance_2" {
@@ -32,7 +37,7 @@ resource "google_compute_instance" "instance_2" {
 
   boot_disk {
     initialize_params {
-      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20240830"
+      image = "projects/${var.project_id}/global/images/mweb-server"
       type  = "pd-balanced"
       size  = 50
     }
@@ -41,15 +46,20 @@ resource "google_compute_instance" "instance_2" {
   network_interface {
     network    = google_compute_network.default.name
     subnetwork = google_compute_subnetwork.subnet_2.id
+    network_ip = "10.0.11.3"
     access_config {
     }
   }
 
   metadata = {
-    user-data = file("./scripts/cloud-config.yaml")
+    user-data = file("./scripts/cloud-config-server-2.yaml")
   }
 
-  tags = google_compute_firewall.rules.target_tags
+  tags = setunion(
+    google_compute_firewall.allow-internal.target_tags,
+    google_compute_firewall.allow-ssh.target_tags,
+    google_compute_firewall.allow-health-check.target_tags,
+  )
 }
 
 resource "google_compute_instance" "instance_witness" {
@@ -59,7 +69,7 @@ resource "google_compute_instance" "instance_witness" {
 
   boot_disk {
     initialize_params {
-      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20240830"
+      image = "projects/${var.project_id}/global/images/mweb-witness"
       type  = "pd-balanced"
       size  = 50
     }
@@ -68,13 +78,17 @@ resource "google_compute_instance" "instance_witness" {
   network_interface {
     network    = google_compute_network.default.name
     subnetwork = google_compute_subnetwork.subnet_3.id
+    network_ip = "10.0.21.3"
     access_config {
     }
   }
 
   metadata = {
-    user-data = file("./scripts/cloud-config.yaml")
+    user-data = file("./scripts/cloud-config-witness.yaml")
   }
 
-  tags = google_compute_firewall.rules.target_tags
+  tags = setunion(
+    google_compute_firewall.allow-internal.target_tags,
+    google_compute_firewall.allow-ssh.target_tags,
+  )
 }

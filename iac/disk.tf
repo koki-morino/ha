@@ -13,11 +13,13 @@ resource "google_compute_disk" "disk_2" {
 }
 
 resource "google_compute_attached_disk" "attached_disk_1" {
-  disk     = google_compute_disk.disk_1.id
-  instance = google_compute_instance.instance_1.id
+  disk        = google_compute_disk.disk_1.id
+  instance    = google_compute_instance.instance_1.id
+  device_name = "dup"
 }
 
 resource "google_compute_attached_disk" "attached_disk_2" {
-  disk     = google_compute_disk.disk_2.id
-  instance = google_compute_instance.instance_2.id
+  disk        = google_compute_disk.disk_2.id
+  instance    = google_compute_instance.instance_2.id
+  device_name = "dup"
 }

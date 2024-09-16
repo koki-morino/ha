@@ -23,7 +23,8 @@ variable "zone" {
 source "googlecompute" "server" {
   project_id                  = var.project_id
   zone                        = var.zone
-  ssh_username                = "koki"
+  // scp requires elevated privilege to copy files into /etc/drbd.d.
+  ssh_username                = "root"
   source_image_family         = "ubuntu-2404-lts-amd64"
   image_name                  = "${var.prefix}-server"
   disk_size                   = 50
@@ -32,7 +33,7 @@ source "googlecompute" "server" {
 source "googlecompute" "witness" {
   project_id                  = var.project_id
   zone                        = var.zone
-  ssh_username                = "koki"
+  ssh_username                = "root"
   source_image_family         = "ubuntu-2404-lts-amd64"
   image_name                  = "${var.prefix}-witness"
   disk_size                   = 50
@@ -50,8 +51,10 @@ build {
 
   provisioner "shell" {
     only = ["googlecompute.server"]
+    environment_vars = ["USERNAME=koki"]
     scripts = [
       "../scripts/install-docker.sh",
+      "../scripts/install-pacemaker.sh",
       "../scripts/install-drbd.sh",
       "../scripts/install-ocfs2.sh",
     ]
@@ -59,15 +62,16 @@ build {
 
   provisioner "shell" {
     only = ["googlecompute.witness"]
+    environment_vars = ["USERNAME=koki"]
     scripts = [
       "../scripts/install-docker.sh",
       "../scripts/install-pacemaker.sh",
     ]
   }
 
-  // provisioner "file" {
-  //   only = ["googlecompute.server"]
-  //   source = "app.tar.gz"
-  //   destination = "/tmp/app.tar.gz"
-  // }
+  provisioner "file" {
+    only = ["googlecompute.server"]
+    source = "../drbd/"
+    destination = "/etc/drbd.d"
+  }
 }

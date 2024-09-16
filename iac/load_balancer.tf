@@ -2,7 +2,7 @@ module "gce-lb-http" {
   source  = "GoogleCloudPlatform/lb-http/google"
   version = "~> 9.0"
 
-  project = var.project
+  project = var.project_id
   name    = "${var.prefix}-https-lb"
 
   # Disable HTTP as my app uses Websocket which requires secure connection.

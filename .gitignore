@@ -10,3 +10,6 @@
 
 # Packer
 **/*.pkrvars.hcl
+
+# Corosync
+**/corosync/authkey
