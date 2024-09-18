@@ -5,22 +5,15 @@ resource "google_compute_network" "default" {
 
 resource "google_compute_subnetwork" "subnet_1" {
   name          = "${var.prefix}-subnet-tokyo"
-  ip_cidr_range = "10.0.1.0/24"
+  ip_cidr_range = "10.0.0.0/16"
   region        = var.region_1
   network       = google_compute_network.default.id
 }
 
 resource "google_compute_subnetwork" "subnet_2" {
   name          = "${var.prefix}-subnet-osaka"
-  ip_cidr_range = "10.0.11.0/24"
+  ip_cidr_range = "10.1.0.0/16"
   region        = var.region_2
-  network       = google_compute_network.default.id
-}
-
-resource "google_compute_subnetwork" "subnet_3" {
-  name          = "${var.prefix}-subnet-seoul"
-  ip_cidr_range = "10.0.21.0/24"
-  region        = var.region_3
   network       = google_compute_network.default.id
 }
 
@@ -37,7 +30,7 @@ resource "google_compute_firewall" "allow-internal" {
     ports    = ["0-65535"]
   }
 
-  source_ranges = ["10.0.1.0/24", "10.0.11.0/24", "10.0.21.0/24"]
+  source_ranges = ["10.0.0.0/16", "10.1.0.0/16", "10.0.21.0/24"]
   target_tags   = ["internal"]
 }
 

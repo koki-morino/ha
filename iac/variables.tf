@@ -16,21 +16,12 @@ variable "region_2" {
   default = "asia-northeast2"
 }
 
-variable "region_3" {
-  # Seoul
-  default = "asia-northeast3"
-}
-
 variable "zone_1" {
   default = "asia-northeast1-a"
 }
 
 variable "zone_2" {
   default = "asia-northeast2-a"
-}
-
-variable "zone_3" {
-  default = "asia-northeast3-a"
 }
 
 variable "service_port" {

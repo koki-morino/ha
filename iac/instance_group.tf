@@ -3,7 +3,7 @@ resource "google_compute_instance_group" "instance_group_1" {
   zone = var.zone_1
 
   instances = [
-    google_compute_instance.instance_1.id,
+    google_compute_instance.server_1.id,
   ]
 
   named_port {
@@ -17,7 +17,7 @@ resource "google_compute_instance_group" "instance_group_2" {
   zone = var.zone_2
 
   instances = [
-    google_compute_instance.instance_2.id,
+    google_compute_instance.server_2.id,
   ]
 
   named_port {

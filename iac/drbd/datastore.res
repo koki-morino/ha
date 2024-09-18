@@ -1,4 +1,7 @@
 resource datastore {
+    handlers {
+        split-brain "/usr/lib/drbd/handle-split-brain.sh root";
+    }
     net {
         protocol C;
         # Enable dual-primary mode only after initial synchronization has completed.
@@ -13,15 +16,15 @@ resource datastore {
     disk "/dev/disk/by-id/google-dup";
     meta-disk internal;
 
-    on "mweb-instance-1" {
+    on "mweb-server-1" {
         node-id 0;
     }
-    on "mweb-instance-2" {
+    on "mweb-server-2" {
         node-id 1;
     }
 
     connection {
-        host "mweb-instance-1" address 10.0.1.3:7789;
-        host "mweb-instance-2" address 10.0.11.3:7789;
+        host "mweb-server-1" address 10.0.0.10:7789;
+        host "mweb-server-2" address 10.1.0.10:7789;
     }
 }
