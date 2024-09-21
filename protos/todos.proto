@@ -13,8 +13,8 @@ message Todos {
     repeated string id = 1;
 }
 
-// Server and client command each other to do one of CRUD operations
-// through this message.
+// Server and client command each other to do one of CRUD operations through
+// this message.
 message TodoDo {
     CRUD crud = 1;
     Todo todo = 2;

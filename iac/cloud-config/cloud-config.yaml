@@ -1,5 +1,12 @@
 #cloud-config
 
+write_files:
+  - path: /etc/environment
+    append: true
+    # Use Vim as text editor.
+    content: |
+      EDITOR="vi"
+
 groups:
   - koki
 
@@ -16,8 +23,8 @@ users:
 # bootcmd didn't work as disk has not been attached to instance on boot
 # process.
 runcmd:
+  # Directory to mount.
+  - mkdir /shared
   - modprobe drbd
   - drbdadm create-md datastore
   - drbdadm up datastore
-  # Only either node should be primary before first synchronization.
-  - drbdadm primary datastore

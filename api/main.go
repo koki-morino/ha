@@ -26,6 +26,15 @@ func main() {
 
 	wrappedMux := middleware.NewLogger(mux)
 
+	kvs, err := middleware.NewKvs()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := kvs.Write(); err != nil {
+		log.Fatal(err)
+	}
+
 	log.Fatal(http.ListenAndServe(":8000", wrappedMux))
 }
 

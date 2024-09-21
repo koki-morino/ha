@@ -22,15 +22,18 @@ resource "google_compute_firewall" "allow-internal" {
   network = google_compute_network.default.name
 
   allow {
-    protocol = "icmp"
+    protocol = "icmp" # Pinging
   }
 
   allow {
     protocol = "tcp"
-    ports    = ["0-65535"]
+    ports = [
+      "7777",      # OCFS2
+      "7788-7789", # DRBD
+    ]
   }
 
-  source_ranges = ["10.0.0.0/16", "10.1.0.0/16", "10.0.21.0/24"]
+  source_ranges = ["10.0.0.0/16", "10.1.0.0/16"]
   target_tags   = ["internal"]
 }
 
@@ -54,8 +57,7 @@ resource "google_compute_firewall" "allow-health-check" {
   allow {
     protocol = "tcp"
     ports = [
-      "8080",  # HTTP
-      "27017", # MongoDB
+      "8080", # HTTP
     ]
   }
 

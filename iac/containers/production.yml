@@ -1,0 +1,20 @@
+# Don't merge compose files as it's hard to read.
+# Make multiple files for multiple environments.
+# docker compose -d -f production.yml up
+
+services:
+  proxy:
+    restart: always
+    image: kokimorino/mweb-proxy:latest
+    depends_on:
+      - api
+    ports:
+      - 8080:8080
+  api:
+    restart: always
+    image: kokimorino/mweb-api:latest
+    expose:
+      - 8000
+    volumes:
+      # Bind to shared storage on OCFS2.
+      - "/shared:/data"

@@ -1,24 +1,15 @@
 services:
   proxy:
+    pull_policy: always
     image: kokimorino/mweb-proxy:latest
     depends_on:
       - api
     ports:
-      - 80:8080
+      - 8080:8080
   api:
+    pull_policy: always
     image: kokimorino/mweb-api:latest
-    depends_on:
-      - db
-      - cache
     expose:
       - 8000
-  db:
-    # I guess ubi meaning Universal Base Images of Red Hat.
-    image: mongodb/mongodb-community-server:7.0.5-ubi8
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=user
-    #   - MONGO_INITDB_ROOT_PASSWORD=pass
-    # volumes:
-    #   - type: bind
-    #     source: ./data
-    #     target: /data/db
+    volumes:
+      - /data

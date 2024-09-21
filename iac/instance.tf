@@ -7,7 +7,6 @@ resource "google_compute_instance" "server_1" {
     initialize_params {
       image = "projects/${var.project_id}/global/images/mweb-server-1"
       type  = "pd-balanced"
-      size  = 50
     }
   }
 
@@ -20,7 +19,7 @@ resource "google_compute_instance" "server_1" {
   }
 
   metadata = {
-    user-data = file("./cloud-config/server-1.yaml")
+    user-data = file("./cloud-config/cloud-config.yaml")
   }
 
   tags = setunion(
@@ -39,7 +38,6 @@ resource "google_compute_instance" "server_2" {
     initialize_params {
       image = "projects/${var.project_id}/global/images/mweb-server-2"
       type  = "pd-balanced"
-      size  = 50
     }
   }
 
@@ -52,7 +50,7 @@ resource "google_compute_instance" "server_2" {
   }
 
   metadata = {
-    user-data = file("./cloud-config/server-2.yaml")
+    user-data = file("./cloud-config/cloud-config.yaml")
   }
 
   tags = setunion(
