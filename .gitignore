@@ -1,7 +1,3 @@
-# Flutter
-**/build/
-**/.dart_tool/
-
 # Terraform
 **/.terraform/
 **/*.tfstate
@@ -12,5 +8,10 @@
 # Packer
 **/*.pkrvars.hcl
 
-# Corosync
-**/corosync/authkey
+# Flutter
+**/build/
+**/.dart_tool/
+
+# Protocol Buffers
+**/protos/*.dart
+**/protos/*.go
