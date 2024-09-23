@@ -1,5 +1,5 @@
 syntax = "proto3";
-package todo;
+package memkept;
 
 option go_package = "protos/";
 
@@ -8,5 +8,5 @@ message Todo {
     string id = 1;
     string title = 2;
     string description = 3;
-    bool completed = 4;
+    bool isCompleted = 4;
 }

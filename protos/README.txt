@@ -1,7 +1,7 @@
-Compile proto for Go:
-protoc --proto_path=. --go_out=../srv/pkg/ crud.proto todo.proto todos.proto
+Compile protos for Go:
+protoc --proto_path=. --go_out=../api/ *.proto
 
-Compile proto for Dart:
-protoc --proto_path=. --dart_out=../app/lib/protos/ crud.proto todo.proto todos.proto
+Compile protos for Dart:
+protoc --proto_path=. --dart_out=../app/lib/protos/ *.proto
 
-Dart also needs to compile third-party proto (e.g. google/protobuf/empty.proto) when using it.
+Dart also needs to compile third-party protos (e.g. google/protobuf/empty.proto) when using it.

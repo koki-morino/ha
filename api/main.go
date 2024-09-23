@@ -51,7 +51,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 	defer c.Close()
 
 	id := uuid.New()
-	todo := &protos.Todo{Id: id.String(), Title: "Hello", Description: "Hello, world!", Completed: false}
+	todo := &protos.Todo{Id: id.String(), Title: "Hello", Description: "Hello, world!", IsCompleted: false}
 	out, err := proto.Marshal(todo)
 	if err != nil {
 		log.Println("Failed to marshall proto message:", err)

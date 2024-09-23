@@ -37,8 +37,8 @@ resource "google_compute_firewall" "allow-internal" {
   target_tags   = ["internal"]
 }
 
-resource "google_compute_firewall" "allow-ssh" {
-  name    = "${var.prefix}-firewall-allow-ssh"
+resource "google_compute_firewall" "allow-ssh-all" {
+  name    = "${var.prefix}-firewall-allow-ssh-all"
   network = google_compute_network.default.name
 
   allow {
@@ -47,20 +47,20 @@ resource "google_compute_firewall" "allow-ssh" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["ssh"]
+  target_tags   = ["ssh-all"]
 }
 
-resource "google_compute_firewall" "allow-health-check" {
-  name    = "${var.prefix}-firewall-allow-health-check"
+resource "google_compute_firewall" "allow-http-all" {
+  name    = "${var.prefix}-firewall-allow-http-all"
   network = google_compute_network.default.name
 
   allow {
     protocol = "tcp"
     ports = [
-      "8080", # HTTP
+      "80", # Nginx
     ]
   }
 
-  source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
-  target_tags   = ["health-check"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["http-all"]
 }

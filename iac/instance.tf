@@ -5,7 +5,7 @@ resource "google_compute_instance" "server_1" {
 
   boot_disk {
     initialize_params {
-      image = "projects/${var.project_id}/global/images/mweb-server-1"
+      image = "projects/${var.project_id}/global/images/mweb-server"
       type  = "pd-balanced"
     }
   }
@@ -24,8 +24,8 @@ resource "google_compute_instance" "server_1" {
 
   tags = setunion(
     google_compute_firewall.allow-internal.target_tags,
-    google_compute_firewall.allow-ssh.target_tags,
-    google_compute_firewall.allow-health-check.target_tags,
+    google_compute_firewall.allow-ssh-all.target_tags,
+    google_compute_firewall.allow-http-all.target_tags,
   )
 }
 
@@ -36,7 +36,7 @@ resource "google_compute_instance" "server_2" {
 
   boot_disk {
     initialize_params {
-      image = "projects/${var.project_id}/global/images/mweb-server-2"
+      image = "projects/${var.project_id}/global/images/mweb-server"
       type  = "pd-balanced"
     }
   }
@@ -55,7 +55,7 @@ resource "google_compute_instance" "server_2" {
 
   tags = setunion(
     google_compute_firewall.allow-internal.target_tags,
-    google_compute_firewall.allow-ssh.target_tags,
-    google_compute_firewall.allow-health-check.target_tags,
+    google_compute_firewall.allow-ssh-all.target_tags,
+    google_compute_firewall.allow-http-all.target_tags,
   )
 }

@@ -20,30 +20,20 @@ variable "zone" {
   default = "asia-northeast1-a"
 }
 
-source "googlecompute" "server-1" {
+source "googlecompute" "server" {
   project_id                  = var.project_id
   zone                        = var.zone
   // File provisioner requires elevated privilege to copy files into non-
   // writable directory like/etc/drbd.d.
   ssh_username                = "root"
   source_image_family         = "ubuntu-2404-lts-amd64"
-  image_name                  = "${var.prefix}-server-1"
-  disk_size                   = 20
-}
-
-source "googlecompute" "server-2" {
-  project_id                  = var.project_id
-  zone                        = var.zone
-  ssh_username                = "root"
-  source_image_family         = "ubuntu-2404-lts-amd64"
-  image_name                  = "${var.prefix}-server-2"
+  image_name                  = "${var.prefix}-server"
   disk_size                   = 20
 }
 
 build {
   sources = [
-    "sources.googlecompute.server-1",
-    "sources.googlecompute.server-2",
+    "sources.googlecompute.server",
   ]
 
   // Install packages.

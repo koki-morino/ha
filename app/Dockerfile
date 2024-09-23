@@ -17,7 +17,7 @@ COPY . .
 # Ignore Git ownership problem as it stops building process.
 RUN git config --global --add safe.directory /app/flutter
 RUN flutter pub get
-RUN flutter build web -o build
+RUN flutter build web --release -o build
 
 FROM nginx:stable-alpine
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf

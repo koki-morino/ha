@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:memkept/pages/home.dart';
-import 'package:memkept/states/counter.dart';
-import 'package:memkept/states/theme.dart';
+import 'package:memkept/bloc/todo_bloc.dart';
+import 'package:memkept/bloc/theme_mode_cubit.dart';
+import 'package:memkept/home.dart';
+import 'package:memkept/theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,17 +12,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider<ThemeCubit>(
-            create: (_) => ThemeCubit(),
+          BlocProvider<ThemeModeCubit>(
+            create: (_) => ThemeModeCubit(),
           ),
-          BlocProvider<CounterCubit>(
-            create: (_) => CounterCubit(),
+          BlocProvider<TodoBloc>(
+            create: (_) => TodoBloc()..add(ListTodos({})),
           )
         ],
-        child: BlocBuilder<ThemeCubit, ThemeData>(builder: (context, state) {
+        child: Builder(builder: (context) {
+          final themeMode = context.watch<ThemeModeCubit>().state;
+
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'memkept',
-            theme: state,
+            themeMode: themeMode,
+            theme: lightTheme(),
+            darkTheme: darkTheme(),
             home: const HomePage(),
           );
         }));

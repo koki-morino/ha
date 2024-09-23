@@ -11,7 +11,10 @@
 # Flutter
 **/build/
 **/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
 
 # Protocol Buffers
-**/protos/*.dart
-**/protos/*.go
+**/protos/*
+!**/protos/*.proto
+!**/protos/README.txt
