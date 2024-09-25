@@ -25,7 +25,7 @@ variable "zone_2" {
 }
 
 variable "service_port" {
-  default = "8080"
+  default = "80"
 }
 
 variable "service_port_name" {

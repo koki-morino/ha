@@ -1,6 +1,5 @@
 # Don't merge compose files as it's hard to read.
 # Make multiple files for multiple environments.
-# docker compose -d -f production.yml up
 
 services:
   proxy:
@@ -16,5 +15,4 @@ services:
     expose:
       - 8000
     volumes:
-      # Bind to shared storage on OCFS2.
-      - "/shared:/data"
+      - "/shared/db:/data"

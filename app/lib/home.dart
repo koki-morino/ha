@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memkept/bloc/theme_mode_cubit.dart';
 import 'package:memkept/bloc/todo_bloc.dart';
+import 'package:memkept/bloc/websocket_bloc.dart';
 import 'package:memkept/protos/todo.pb.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,6 +16,7 @@ class HomePage extends StatelessWidget {
     return Builder(builder: (context) {
       final themeMode = context.watch<ThemeModeCubit>().state;
       final todoState = context.watch<TodoBloc>().state;
+      final websocketState = context.watch<WebsocketBloc>().state;
 
       return Scaffold(
         appBar: AppBar(
@@ -87,56 +89,61 @@ class HomePage extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            constraints: const BoxConstraints(maxWidth: 768),
-            padding: const EdgeInsets.all(10),
-            child: () {
-              if (todoState.status == TodoStatus.success) {
-                return ListView(
-                  children: todoState.todos.keys
-                      .map(
-                        (key) => Card(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Checkbox(
-                                    value: todoState.todos[key]!.isCompleted,
-                                    onChanged: (_) =>
-                                        context.read<TodoBloc>().add(
-                                              UpdateTodo(Todo(
+              constraints: const BoxConstraints(maxWidth: 768),
+              padding: const EdgeInsets.all(10),
+              child: switch (todoState.runtimeType) {
+                const (TodoSuccess) => ListView(
+                    children: todoState.todos.keys
+                        .map(
+                          (key) => Card(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 5,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Checkbox(
+                                      value: todoState.todos[key]!.isCompleted,
+                                      onChanged: (_) =>
+                                          context.read<TodoBloc>().add(
+                                                UpdateTodo(Todo(
                                                   id: todoState.todos[key]!.id,
                                                   title: todoState
                                                       .todos[key]!.title,
                                                   description: todoState
                                                       .todos[key]!.description,
                                                   isCompleted: !todoState
-                                                      .todos[key]!
-                                                      .isCompleted)),
-                                            )),
-                                Text(
-                                  todoState.todos[key]!.title,
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete_outline),
-                                  onPressed: () => {},
-                                )
-                              ],
+                                                      .todos[key]!.isCompleted,
+                                                )),
+                                              )),
+                                  Text(
+                                    todoState.todos[key]!.title,
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete_outline),
+                                    onPressed: () =>
+                                        context.read<TodoBloc>().add(
+                                              DeleteTodo(Todo(
+                                                id: todoState.todos[key]!.id,
+                                                title: "",
+                                                description: "",
+                                                isCompleted: false,
+                                              )),
+                                            ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                );
-              }
-
-              return const CircularProgressIndicator();
-            }(),
-          ),
+                        )
+                        .toList(),
+                  ),
+                _ => const CircularProgressIndicator()
+              }),
         ),
       );
     });

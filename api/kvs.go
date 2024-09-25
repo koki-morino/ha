@@ -1,4 +1,4 @@
-package middleware
+package main
 
 import (
 	"fmt"
@@ -68,7 +68,7 @@ func (kvs *Kvs) Write() error {
 		return err
 	}
 
-	println(value)
+	logger.Info(value)
 
 	return nil
 }

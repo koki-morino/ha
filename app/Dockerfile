@@ -20,8 +20,8 @@ RUN flutter pub get
 RUN flutter build web --release -o build
 
 FROM nginx:stable-alpine
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/build /usr/share/nginx/html
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # docker build -t kokimorino/mweb-proxy:latest .
 # docker push kokimorino/mweb-proxy:latest

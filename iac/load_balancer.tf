@@ -5,18 +5,20 @@ module "gce-lb-http" {
   project = var.project_id
   name    = "${var.prefix}-https-lb"
 
-  # Disable HTTP as my app uses Websocket which requires secure connection.
   http_forward                    = false
+  https_redirect                  = true
   ssl                             = true
   managed_ssl_certificate_domains = [var.domain]
 
+
   backends = {
-    default = {
-      protocol    = "HTTP"
+    https = {
+      protocol    = "HTTPS"
       port        = var.service_port
       port_name   = var.service_port_name
-      enable_cdn  = false
-      timeout_sec = 10
+      timeout_sec = 60
+
+      enable_cdn = false
 
       health_check = {
         request_path = "/"
@@ -24,8 +26,7 @@ module "gce-lb-http" {
       }
 
       log_config = {
-        enable      = true
-        sample_rate = 1.0
+        enable = false
       }
 
       groups = [

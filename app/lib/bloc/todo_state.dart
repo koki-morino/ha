@@ -1,26 +1,33 @@
 part of 'todo_bloc.dart';
 
-enum TodoStatus { loading, success, failure }
-
 class TodoState extends Equatable {
-  final TodoStatus status;
   final Map<String, Todo> todos;
 
   const TodoState({
-    this.status = TodoStatus.loading,
-    this.todos = const {},
+    required this.todos,
   });
 
-  TodoState copyWith({
-    TodoStatus? status,
-    Map<String, Todo>? todos,
-  }) {
-    return TodoState(
-      status: status ?? this.status,
-      todos: todos ?? this.todos,
-    );
-  }
+  @override
+  List<Object> get props => [todos];
+}
+
+final class TodoLoading extends TodoState {
+  const TodoLoading({required super.todos});
 
   @override
-  List<Object> get props => [status, todos];
+  String toString() => 'TodoLoading';
+}
+
+final class TodoSuccess extends TodoState {
+  const TodoSuccess({required super.todos});
+
+  @override
+  String toString() => 'TodoSuccess';
+}
+
+final class TodoFailure extends TodoState {
+  const TodoFailure({required super.todos});
+
+  @override
+  String toString() => 'TodoFailure';
 }
