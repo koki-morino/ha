@@ -3,7 +3,7 @@ FROM ubuntu:24.10 AS build
 
 WORKDIR /app
 
-# Install dependencies.
+# Install dependencies for Flutter.
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y wget curl git unzip xz-utils zip libglu1-mesa
 

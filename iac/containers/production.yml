@@ -1,6 +1,3 @@
-# Don't merge compose files as it's hard to read.
-# Make multiple files for multiple environments.
-
 services:
   proxy:
     restart: always
@@ -9,10 +6,13 @@ services:
       - api
     ports:
       - 80:8080
+    volumes:
+      - "/shared/log/nginx:/var/log/nginx"
   api:
     restart: always
     image: kokimorino/mweb-api:latest
     expose:
       - 8000
     volumes:
+      - "/shared/log/api:/log"
       - "/shared/db:/data"

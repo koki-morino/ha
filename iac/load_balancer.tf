@@ -5,11 +5,12 @@ module "gce-lb-http" {
   project = var.project_id
   name    = "${var.prefix}-https-lb"
 
-  http_forward                    = false
-  https_redirect                  = true
-  ssl                             = true
-  managed_ssl_certificate_domains = [var.domain]
+  http_forward   = false
+  https_redirect = true
 
+  ssl         = true
+  private_key = file("private/privkey.pem")
+  certificate = file("private/cert.pem")
 
   backends = {
     https = {

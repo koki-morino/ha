@@ -18,6 +18,8 @@ class HomePage extends StatelessWidget {
       final todoState = context.watch<TodoBloc>().state;
       final websocketState = context.watch<WebsocketBloc>().state;
 
+      final width = MediaQuery.of(context).size.width;
+
       return Scaffold(
         appBar: AppBar(
           title: const Text("Memkept"),
@@ -33,54 +35,46 @@ class HomePage extends StatelessWidget {
               onPressed: () => context.read<ThemeModeCubit>().toggle(),
             )
           ],
+          bottom: switch (websocketState.runtimeType) {
+            const (WebsocketConnecting) => const PreferredSize(
+                preferredSize: Size(double.infinity, 1),
+                child: LinearProgressIndicator()),
+            _ => null,
+          },
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () => showDialog(
             context: context,
             builder: (context) {
-              var titleController = TextEditingController();
-              var descriptionController = TextEditingController();
+              final titleController = TextEditingController();
 
-              return SimpleDialog(
-                titlePadding: const EdgeInsets.all(20).copyWith(bottom: 0),
-                title: const Text("Add Todo"),
-                contentPadding: const EdgeInsets.all(20),
-                children: [
-                  TextField(
+              return AlertDialog(
+                title: const Text("New Todo"),
+                content: SizedBox(
+                  width: width >= 400 ? 400 : width,
+                  child: TextField(
                     controller: titleController,
                     maxLines: 1,
                     decoration: const InputDecoration(
                       labelText: "Title",
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: descriptionController,
-                    maxLines: 2,
-                    keyboardType: TextInputType.multiline,
-                    decoration: const InputDecoration(
-                      labelText: "Description",
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: FilledButton(
-                      child: const Text("Add"),
-                      onPressed: () {
-                        context.read<TodoBloc>().add(
-                              CreateTodo(Todo(
-                                id: uuid.v4(),
-                                title: titleController.text,
-                                description: descriptionController.text,
-                                isCompleted: false,
-                              )),
-                            );
-
-                        Navigator.pop(context);
-                      },
-                    ),
+                ),
+                actionsAlignment: MainAxisAlignment.center,
+                actions: [
+                  FilledButton(
+                    child: const Text("Add"),
+                    onPressed: () {
+                      context.read<TodoBloc>().add(
+                            CreateTodo(Todo(
+                              uuidv4: uuid.v4(),
+                              title: titleController.text,
+                              isCompleted: false,
+                            )),
+                          );
+                      Navigator.pop(context);
+                    },
                   ),
                 ],
               );
@@ -108,18 +102,18 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   Checkbox(
                                       value: todoState.todos[key]!.isCompleted,
-                                      onChanged: (_) =>
-                                          context.read<TodoBloc>().add(
-                                                UpdateTodo(Todo(
-                                                  id: todoState.todos[key]!.id,
-                                                  title: todoState
-                                                      .todos[key]!.title,
-                                                  description: todoState
-                                                      .todos[key]!.description,
-                                                  isCompleted: !todoState
-                                                      .todos[key]!.isCompleted,
-                                                )),
-                                              )),
+                                      onChanged: (_) => context
+                                          .read<TodoBloc>()
+                                          .add(
+                                            UpdateTodo(Todo(
+                                              uuidv4:
+                                                  todoState.todos[key]!.uuidv4,
+                                              title:
+                                                  todoState.todos[key]!.title,
+                                              isCompleted: !todoState
+                                                  .todos[key]!.isCompleted,
+                                            )),
+                                          )),
                                   Text(
                                     todoState.todos[key]!.title,
                                   ),
@@ -128,9 +122,9 @@ class HomePage extends StatelessWidget {
                                     onPressed: () =>
                                         context.read<TodoBloc>().add(
                                               DeleteTodo(Todo(
-                                                id: todoState.todos[key]!.id,
+                                                uuidv4: todoState
+                                                    .todos[key]!.uuidv4,
                                                 title: "",
-                                                description: "",
                                                 isCompleted: false,
                                               )),
                                             ),

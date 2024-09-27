@@ -8,10 +8,6 @@ ThemeData lightTheme() {
   ThemeData tmp = _baseTheme().copyWith(colorScheme: colorScheme);
 
   return tmp.copyWith(
-    appBarTheme: tmp.appBarTheme.copyWith(
-      backgroundColor: colorScheme.primary,
-      foregroundColor: colorScheme.onPrimary,
-    ),
     scaffoldBackgroundColor: colorScheme.surface,
     textTheme: tmp.textTheme.apply(
       bodyColor: colorScheme.onSurface,
@@ -19,6 +15,8 @@ ThemeData lightTheme() {
     iconTheme: tmp.iconTheme.copyWith(color: colorScheme.onSurface),
     dialogTheme: tmp.dialogTheme.copyWith(
       backgroundColor: colorScheme.surface,
+      titleTextStyle: tmp.dialogTheme.titleTextStyle
+          ?.copyWith(color: colorScheme.onSurface),
     ),
   );
 }
@@ -30,10 +28,6 @@ ThemeData darkTheme() {
   ThemeData tmp = _baseTheme().copyWith(colorScheme: colorScheme);
 
   return tmp.copyWith(
-    appBarTheme: tmp.appBarTheme.copyWith(
-      backgroundColor: colorScheme.primary,
-      foregroundColor: colorScheme.onPrimary,
-    ),
     scaffoldBackgroundColor: colorScheme.surface,
     textTheme: tmp.textTheme.apply(
       bodyColor: colorScheme.onSurface,
@@ -42,6 +36,8 @@ ThemeData darkTheme() {
     iconTheme: tmp.iconTheme.copyWith(color: colorScheme.onSurface),
     dialogTheme: tmp.dialogTheme.copyWith(
       backgroundColor: colorScheme.surface,
+      titleTextStyle: tmp.dialogTheme.titleTextStyle
+          ?.copyWith(color: colorScheme.onSurface),
     ),
   );
 }
@@ -73,10 +69,14 @@ ThemeData _baseTheme() {
       titleMedium: notoSansJp.copyWith(fontSize: 24),
       titleSmall: notoSansJp.copyWith(fontSize: 22),
     ),
+    dialogTheme: tmp.dialogTheme.copyWith(
+      titleTextStyle: notoSansJp.copyWith(fontSize: 26),
+    ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-        textStyle: notoSansJp.copyWith(fontSize: 18),
+        minimumSize: const Size(65, 65),
+        textStyle: notoSansJp.copyWith(fontSize: 20),
       ),
     ),
     iconTheme: tmp.iconTheme.copyWith(size: 30),

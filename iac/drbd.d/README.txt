@@ -21,7 +21,7 @@ Mount OCFS2:
 mount -t ocfs2 /dev/drbd1 /shared
 
 Watch DRBD status:
-while :; do drbdadm status; sleep 1; done
+while :; do drbdadm status; sleep 5; done
 
 Simulate network partition:
 sudo iptables -A INPUT -s 10.0.0.10 -j DROP

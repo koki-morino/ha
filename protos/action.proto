@@ -5,8 +5,12 @@ option go_package = "protos/";
 
 enum Action {
     Ping = 0;
+
     ListTodos = 1;
     CreateTodo = 2;
     DeleteTodo = 3;
     UpdateTodo = 4;
+
+    GetThemeMode = 5;
+    UpdateThemeMode = 6;
 }

@@ -4,6 +4,10 @@ sealed class WebsocketEvent {
   const WebsocketEvent();
 }
 
+final class WebsocketInitialized extends WebsocketEvent {
+  const WebsocketInitialized();
+}
+
 final class WebsocketConnected extends WebsocketEvent {
   const WebsocketConnected();
 }

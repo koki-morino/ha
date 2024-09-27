@@ -18,22 +18,22 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   void _onCreateTodo(CreateTodo event, Emitter<TodoState> emit) {
-    var tmp = Map<String, Todo>.from(state.todos);
-    tmp.addAll({event.todo.id: event.todo});
+    final tmp = Map<String, Todo>.from(state.todos);
+    tmp.addAll({event.todo.uuidv4: event.todo});
 
     emit(TodoSuccess(todos: tmp));
   }
 
   void _onDeleteTodo(DeleteTodo event, Emitter<TodoState> emit) {
-    var tmp = Map<String, Todo>.from(state.todos);
-    tmp.remove(event.todo.id);
+    final tmp = Map<String, Todo>.from(state.todos);
+    tmp.remove(event.todo.uuidv4);
 
     emit(TodoSuccess(todos: tmp));
   }
 
   void _onUpdateTodo(UpdateTodo event, Emitter<TodoState> emit) {
-    var tmp = Map<String, Todo>.from(state.todos);
-    tmp.update(event.todo.id, (_) => event.todo);
+    final tmp = Map<String, Todo>.from(state.todos);
+    tmp.update(event.todo.uuidv4, (_) => event.todo);
 
     emit(TodoSuccess(todos: tmp));
   }

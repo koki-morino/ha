@@ -1,3 +1,4 @@
+# Development only
 services:
   proxy:
     pull_policy: always
