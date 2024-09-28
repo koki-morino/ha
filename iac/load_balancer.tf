@@ -13,8 +13,8 @@ module "gce-lb-http" {
   certificate = file("private/cert.pem")
 
   backends = {
-    https = {
-      protocol    = "HTTPS"
+    http = {
+      protocol    = "HTTP"
       port        = var.service_port
       port_name   = var.service_port_name
       timeout_sec = 60
