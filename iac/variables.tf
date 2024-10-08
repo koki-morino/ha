@@ -1,7 +1,6 @@
 variable "project_id" {}
 
 variable "region" {
-  # Tokyo
   default = "asia-northeast1"
 }
 

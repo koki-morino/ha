@@ -14,5 +14,5 @@
 !**/protos/*.proto
 !**/protos/README.txt
 
-# CGI
-**/*.cgi
+# Rust
+**/target

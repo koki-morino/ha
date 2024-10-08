@@ -17,7 +17,6 @@ provider "google" {
   zone    = var.zone
 }
 
-
 provider "kubernetes" {
   host                   = "https://${google_container_cluster.default.endpoint}"
   token                  = data.google_client_config.default.access_token
